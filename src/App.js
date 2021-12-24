@@ -1,10 +1,10 @@
 import './App.css';
-import React, {Component} from 'react'
-import Krpano from 'react-krpano'
+import React, {Component} from 'react';
+import Krpano from 'react-krpano';
 
 export default class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       popState: false,
       eyes: false,
@@ -13,7 +13,7 @@ export default class App extends Component {
     this.hooks = {
       pop: (e) => this.pop(e),
       eyeMode: () => { this.setState({eyes: !this.state.eyes}) }
-    }
+    };
   }
 
   render() {
@@ -24,18 +24,17 @@ export default class App extends Component {
               <button onClick={() => {
                 window.krpano.set('hotspot[spot3].visible', 'false')
                 window.krpano.set('hotspot[spot3y].visible', 'true')
-              }}>切换热点标题
+              }}>Button 1
               </button>
               <button onClick={() => {
                 window.krpano.set('hotspot[spot3].visible', 'false')
                 window.krpano.set('hotspot[spot3x].visible', 'true')
-              }}>动态更新热点
+              }}>Button 2
               </button>
-              <button onClick={() => {window.krpano.hooks.lockView('h')}}>锁定视角
+              <button onClick={() => {window.krpano.hooks.lockView('h')}}>Lock View
               </button>
-              <button onClick={() => {window.krpano.hooks.unlockView()}}>解锁视角
+              <button onClick={() => {window.krpano.hooks.unlockView()}}>Unlock view
               </button>
-
             </div>
 
             {this.state.eyes &&
@@ -46,7 +45,7 @@ export default class App extends Component {
             }}>
               {this.state.popState === 1 && <div className={'popup_main'}>
                 <div className={'popup_button'} onClick={() => {
-                  window.location = 'https://jx3.xoyo.com/'
+                  window.location = 'https://google.com/'
                 }} />
                 <div className={'popup_close'} onClick={() => {
                   this.setState({popState: false})
@@ -62,41 +61,41 @@ export default class App extends Component {
   pop(e) {
     this.setState({
       popState: e
-    })
+    });
   }
 
   eyeModeSwitch() {
-    let vl = window.krpano.get('view.vlookat')
-    let hl = window.krpano.get('view.hlookat')
-    if (this.state.eyeMode) window.krpano.call('loadscene(scene_inside,null,MERGE,BLEND(1.0, easeInCubic));')
-    else window.krpano.call('loadscene(scene_inside_eye,null,MERGE,BLEND(1.0, easeInCubic));')
+    let vl = window.krpano.get('view.vlookat');
+    let hl = window.krpano.get('view.hlookat');
+    if (this.state.eyeMode) window.krpano.call('loadscene(scene_inside,null,MERGE,BLEND(1.0, easeInCubic));');
+    else window.krpano.call('loadscene(scene_inside_eye,null,MERGE,BLEND(1.0, easeInCubic));');
     setTimeout(() => {
-      window.krpano.set('view.hlookat', hl)
-      window.krpano.set('view.vlookat', vl)
-    }, 50)
-    this.setState({eyeMode: !this.state.eyeMode})
+      window.krpano.set('view.hlookat', hl);
+      window.krpano.set('view.vlookat', vl);
+    }, 50);
+    this.setState({eyeMode: !this.state.eyeMode});
   }
 
   next = () => {
-    window.krpano.call('loadscene(scene_test2,null,MERGE,BLEND(1.0, easeInCubic))')
+    window.krpano.call('loadscene(scene_test2,null,MERGE,BLEND(1.0, easeInCubic))');
   };
 
   lockView() {
-    window.krpano.hooks.lockView('h')
-    // let vl = window.krpano.get('view.vlookat')
-    // let hl = window.krpano.get('view.hlookat')
-    // window.krpano.set('view.vlookatmin', vl)
-    // window.krpano.set('view.vlookatmax', vl)
-    // window.krpano.set('view.hlookatmin', hl)
-    // window.krpano.set('view.hlookatmax', hl)
-    // window.krpano.set('view.limitview', 'lookat')
+    window.krpano.hooks.lockView('h');
+    // let vl = window.krpano.get('view.vlookat');
+    // let hl = window.krpano.get('view.hlookat');
+    // window.krpano.set('view.vlookatmin', vl);
+    // window.krpano.set('view.vlookatmax', vl);
+    // window.krpano.set('view.hlookatmin', hl);
+    // window.krpano.set('view.hlookatmax', hl);
+    // window.krpano.set('view.limitview', 'lookat');
   }
 
   unlockView() {
-    window.krpano.set('view.limitview', 'auto')
+    window.krpano.set('view.limitview', 'auto');
   }
 
   mounted = () => {
-    console.log('krpano is ready')
+    console.log('krpano is ready');
   };
 }

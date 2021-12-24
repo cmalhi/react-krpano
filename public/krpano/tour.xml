@@ -1,153 +1,74 @@
-﻿<krpano onstart="jscall(reactKrpano.onStart())">
-
-
-	<!-- load the first scene on startup -->
+﻿<krpano version="1.19" title="Virtual Tour">
+	<!-- 菜单设置 -->
+	<include url="style/style.xml" />
+	<!-- 生命周期-加载第一个场景 -->
 	<action name="startup" autorun="onstart">
-		loadscene(scene_mitte, null, MERGE);
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions());
+    jscall(krpano.hooks.ready())
 	</action>
 
+  <hotspot name="spot0" ath="177.199" atv="0" url="style/spritesheet4.png" keep="true" scale="1" onloaded="do_crop_animation(92, 90, 38);"/>
 
-	<!-- hotspot styles (black and white hotspots) -->
-	<style name="hotspot_ani_black"
-	       url="skin/hotspot_ani_black_64x64x20.png"
-	       crop="0|0|64|64"
-	       frames="20" framewidth="64" frameheight="64" frame="0"
-	       onloaded="hotspot_animate();"
-	       />
-
-	<style name="hotspot_ani_white"
-	       url="skin/hotspot_ani_white_64x64x20.png"
-	       crop="0|0|64|64"
-	       frames="20" framewidth="64" frameheight="64" frame="0"
-	       onloaded="hotspot_animate();"
-	       />
-
-	<!-- hotspot animation code -->
-	<action name="hotspot_animate">
-		if(loaded,
-			inc(frame,1,get(frames),0);
-			mul(ypos,frame,frameheight);
-			txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
-			delayedcall(0.03, hotspot_animate() );
-		  );
-	</action>
-
-  <events onnewscene="jscall(calc('reactKrpano.logScene(`' + get(xml.scene) + '`)'))" /> 
-
-  <action name="toggleHotspotVisibility">
-		for(set(i,0), i LT hotspot.count, inc(i),
-			set(hotspot[get(i)].visible, %1);
-		);
-	</action>
-
-
-	<!-- the tour scenes -->
-
-	<scene name="scene_mitte" onstart="updateradar();">
-
-		<action name="updateradar">
-			set(layer[activespot].parent, spot1);
-			set(layer[radar].parent, spot1);
-			set(layer[radar].heading, -1.92);
-		</action>
-
-		<view hlookat="202.65" vlookat="8.12" fov="105.5" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
-
-		<preview url="panos/mitte.tiles/preview.jpg" />
-
-		<image>
-			<cube url="panos/mitte.tiles/pano_%s.jpg" if="browser.domain != 'krpano.com'" />
-			<cube url="https://krpano.com/tours/bkeller/panos/bkeller2010-mitte.tiles/pano_%s.jpg" if="browser.domain == 'krpano.com'" />
+  <!-- 场景2 -->
+	<scene name="scene_inside1" title="inside1" thumburl="panos/inside1.titles/thumb.jpg">
+		<!-- 视窗配置 -->
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120"  fovmin="120" fovmax="120" limitview="auto" />
+		<!-- 预览配置 -->
+		<preview url="panos/inside1.tiles/preview.jpg" />
+		<!-- 全景视图配置 -->
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1280" tiledimageheight="1280">
+				<cube url="panos/inside1.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="640" tiledimageheight="640">
+				<cube url="panos/inside1.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
 		</image>
-
-		<hotspot name="spot1" style="hotspot_ani_white" ath="2.56" atv="24.54"
-		         onclick="lookto(get(ath),5,35);
-		                  loadscene(scene_glastuer,null,MERGE,BLEND(1));
-		                  lookat(92.85, 14.11, 109.8);
-		                  set(view.architectural,1.0);
-		                  wait(BLEND);
-		                  tween(view.architectural,0.0,2.0);
-		                  oninterrupt( tween(view.architectural,0.0,0.5) );
-		                  lookto(-99.5, 21.1, 99.5, smooth(100,100,200));
-		                  "
-		         />
-
-		<hotspot name="spot2" style="hotspot_ani_white" ath="154.20" atv="1.22"
-		         onclick="looktohotspot(get(name));
-		                  loadscene(scene_ecke,null,MERGE,BLEND(1));
-		                  lookat(70.42, 4.64, 99.5);
-		                  wait(BLEND);
-		                  oninterrupt(break);
-		                  lookto(-151.42, 4.18, 99.5, smooth(100,100,200));"
-		         />
-
+		<!-- 热点 -->
+    <hotspot name="spot4" style="hotspot_style_anime_3" ath="-266.57535" atv="-4.56823" onclick="loadscene(scene_hongkong,null,MERGE,BLEND(1.0, easeInCubic))" />
 	</scene>
 
+  <!-- 场景1 -->
+  <scene name="scene_hongkong" title="hongkong" havevrimage="true" thumburl="panos/hongkong.tiles/thumb.jpg">
+    <!-- 视窗配置 -->
+    <view hlookat="177.349" vlookat="27.330" fovtype="MFOV" fov="110.000" maxpixelzoom="1" fovmin="110" fovmax="110" limitview="auto" />
+    <!-- 预览配置 -->
+    <preview url="panos/hongkong.tiles/preview.jpg" />
+    <!-- 全景视图配置 -->
+    <image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+      <level tiledimagewidth="1280" tiledimageheight="1280">
+        <cube url="panos/hongkong.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+      </level>
+      <level tiledimagewidth="640" tiledimageheight="640">
+        <cube url="panos/hongkong.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+      </level>
+    </image>
+    <!-- 热点 -->
 
-	<scene name="scene_ecke" onstart="updateradar();">
+    <hotspot name="spot1" style="hotspot_style" ath="177.199" atv="15.974" onclick="loadscene(scene_inside,null,MERGE,BLEND(1.0, easeInCubic));jscall(krpano.hooks.eyeMode())" />
+    <hotspot name="spot2" style="hotspot_style_anime" ath="327.61605" atv="-3.91918" onclick="jscall(krpano.hooks.pop(1))" />
+    <hotspot name="spot3" style="hotspot_style_anime_4"  ath="16.92924" atv="7.66196"  onclick="jscall(krpano.hooks.pop(2))"  title="旋转三角" />
+    <hotspot name="spot3y" visible="false" style="hotspot_style_anime_4"  ath="16.92924" atv="7.66196"  onclick="jscall(krpano.hooks.pop(2))"  title="无敌小三角" />
+    <hotspot name="spot3x" visible="false" style="hotspot_style_anime_3" ath="16.92924" atv="7.66196" onclick="jscall(krpano.hooks.pop(2))" />
 
-		<action name="updateradar">
-			set(layer[activespot].parent, spot2);
-			set(layer[radar].parent, spot2);
-			set(layer[radar].heading, 87.10);
-		</action>
+  </scene>
+  <scene name="scene_inside"  onstart="" thumburl="panos/inside3.tiles/thumb.jpg">
+    <view hlookat="-295.54753" vlookat="-6.76344" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="100" fovmax="130" limitview="auto" />
+    <preview url="panos/inside3.tiles/preview.jpg" />
+    <image>
+      <cube url="panos/inside3.tiles/pano_%s.jpg" />
+    </image>
+  </scene>
 
-		<view hlookat="-151.42" vlookat="4.18" fov="99.5" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
-
-		<preview url="panos/ecke.tiles/preview.jpg" />
-
-		<image>
-			<cube url="panos/ecke.tiles/pano_%s.jpg" if="browser.domain != 'krpano.com'" />
-			<cube url="https://krpano.com/tours/bkeller/panos/bkeller2010-ecke.tiles/pano_%s.jpg" if="browser.domain == 'krpano.com'" />
-		</image>
-
-		<hotspot name="spot1" style="hotspot_ani_white" ath="234.00" atv="0.00"
-		         onclick="looktohotspot(get(name));
-		                  loadscene(scene_mitte,null,MERGE,BLEND(1));
-		                  lookat(320.22, 1.05, 48.15);
-		                  wait(BLEND);
-		                  oninterrupt(break);
-		                  lookto(202.65, 8.12, 105.5, smooth(100,100,200));"
-		         />
-
-	</scene>
-
-
-	<scene name="scene_glastuer" onstart="updateradar();">
-
-		<action name="updateradar">
-			set(layer[activespot].parent, spot3);
-			set(layer[radar].parent, spot3);
-			set(layer[radar].heading, -91.11);
-		</action>
-
-		<view hlookat="-99.5" vlookat="21.1" fov="99.5" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
-
-		<preview url="panos/glastuer.tiles/preview.jpg" />
-
-		<image>
-			<cube url="panos/glastuer.tiles/pano_%s.jpg" if="browser.domain != 'krpano.com'" />
-			<cube url="https://krpano.com/tours/bkeller/panos/bkeller2010-glastuer.tiles/pano_%s.jpg" if="browser.domain == 'krpano.com'" />
-		</image>
-
-		<hotspot name="spot1" style="hotspot_ani_white" ath="269.92" atv="22.91"
-		         onclick="lookto(get(ath),5,35);
-		                  loadscene(scene_mitte,null,MERGE,BLEND(1));
-		                  lookat(183.13, 9.56, 59.66);
-		                  wait(BLEND);
-		                  oninterrupt(break);
-		                  lookto(202.65, 8.12, 105.5, smooth(100,100,200));"
-		         />
-
-		<hotspot name="spot2" style="hotspot_ani_white" ath="254.27" atv="-1.025"
-		         onclick="looktohotspot(get(name));
-		                  loadscene(scene_ecke,null,MERGE,BLEND(1));
-		                  lookat(-116.91, -0.75, 20.78);
-		                  wait(BLEND);
-		                  oninterrupt(break);
-		                  lookto(-151.42, 4.18, 99.5, smooth(100,100,200));"
-		         />
-
-	</scene>
+  <scene name="scene_inside_eye"  thumburl="panos/inside3_eye.tiles/thumb.jpg">
+    <view hlookat="-295.54753" vlookat="-6.76344" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="100" fovmax="130" limitview="auto" />
+    <preview url="panos/inside3_eye.tiles/preview.jpg" />
+    <image>
+      <cube url="panos/inside3_eye.tiles/pano_%s.jpg" />
+    </image>
+    <hotspot name="spot5" style="hotspot_style_anime_3" ath="-452.06719" atv="-19.36974" onclick="loadscene(scene_hongkong,null,MERGE,BLEND(1.0, easeInCubic));jscall(krpano.hooks.eyeMode())" />
+  </scene>
 
 </krpano>
