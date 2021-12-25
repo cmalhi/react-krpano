@@ -1,0 +1,82 @@
+@mixin font {
+    font-family: "Century Gothic";
+}
+
+@mixin values-font {
+    @include font;
+
+    font-size: 14px;
+    color: darkslateblue;
+}
+
+@mixin title-font {
+    font-size: 12px;
+}
+@mixin button {
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    background: #222222;
+    border: none;
+}
+
+.cart {
+    @include font;
+    z-index: 99;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFFF0;
+    padding: 30px;
+    width: 250px;
+    border-bottom-right-radius: 5px;
+
+    &__items {
+        margin-top: 25px;
+    }
+
+    &-item {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 25px;
+
+        &__image {
+            height: 50px;
+            width: 50px;
+            background: black;
+            margin-right: 15px;
+        }
+
+        &__text {
+            width: 180px;
+        }
+
+        &__name {
+            @include title-font;
+            margin-bottom: 10px;
+        }
+
+        &__values {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 20px;
+        }
+
+        &__price {
+            @include values-font;
+        }
+
+        &__quantity {
+            @include values-font;
+
+            padding-right: 10px;
+        }
+    }
+
+    &__checkout {
+        @include button;
+        width: 100%;
+        margin-top: 10px;
+    }
+}

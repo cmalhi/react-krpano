@@ -1,6 +1,7 @@
 import './App.css';
 import React, {Component} from 'react';
 import Krpano from 'react-krpano';
+import Cart from "./components/Cart";
 
 export default class App extends Component {
   constructor(props) {
@@ -14,11 +15,32 @@ export default class App extends Component {
       pop: (e) => this.pop(e),
       eyeMode: () => { this.setState({eyes: !this.state.eyes}) }
     };
+    this.cartItems = [
+      {
+        id: '1',
+        name: 'Diamond Gold Rolex Custom Red Arabic Full Diamond Dial',
+        price: '$11000.00',
+        quantity: '1'
+      },
+      {
+        id: '2',
+        name: 'Diamond Platinum Rolex With Fully Diamond Dial',
+        price: '$20011.99',
+        quantity: '1'
+      },
+      {
+        id: '3',
+        name: 'Diamond Watch Cleaning kit',
+        price: '$311.99',
+        quantity: '2'
+      }
+    ]
   }
 
   render() {
     return (
         <div>
+          <Cart cartItems={this.cartItems} />
           <div className={'panel'}>
             <div className="test">
               <button onClick={() => {
