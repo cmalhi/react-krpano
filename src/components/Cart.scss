@@ -13,11 +13,7 @@
     font-size: 12px;
 }
 @mixin button {
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
     background: #222222;
-    border: none;
 }
 
 .cart {
@@ -76,7 +72,12 @@
 
     &__checkout {
         @include button;
+
         width: 100%;
         margin-top: 10px;
     }
 }
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+    @include button;
+}
+

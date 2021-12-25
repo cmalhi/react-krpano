@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import './Cart.scss';
 import React from 'react';
+import Button from '@mui/material/Button';
 
 const Cart = (props) => {
   const cartItems = props.cartItems.map(cartItem =>
@@ -23,7 +24,10 @@ const Cart = (props) => {
           <div className="cart__items">
               {cartItems}
           </div>
-          <button className="cart__checkout">Checkout</button>
+          <Button
+              variant="contained"
+              className="cart__checkout"
+          >Checkout</Button>
       </div>
   );
 }
