@@ -18,13 +18,13 @@ export default class App extends Component {
     this.cartItems = [
       {
         id: '1',
-        name: 'Diamond Gold Rolex Custom Red Arabic Full Diamond Dial',
+        name: 'Gold Rolex Custom Red Diamond Dial',
         price: '$11000.00',
         quantity: '1'
       },
       {
         id: '2',
-        name: 'Diamond Platinum Rolex With Fully Diamond Dial',
+        name: 'Platinum Rolex Diamond Dial',
         price: '$20011.99',
         quantity: '1'
       },
